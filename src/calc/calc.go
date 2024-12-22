@@ -1,4 +1,4 @@
-package main
+package calculator
 
 import (
 	"errors"
@@ -8,18 +8,33 @@ import (
 	"unicode"
 )
 
-func isNumeric(token string) bool {
-	_, err := strconv.ParseFloat(token, 64)
-	return err == nil
+type Calculator interface {
+	Calculate(expression string) (float64, error)
 }
 
-func isOperator(token string) bool {
-	return strings.Contains("+-*/", token)
+type BasicCalculator struct{}
+
+func NewBasicCalculator() *BasicCalculator {
+	return &BasicCalculator{}
+}
+
+func (c *BasicCalculator) Calculate(expression string) (float64, error) {
+	if err := validateParentheses(expression); err != nil {
+		return 0, err
+	}
+	tokens, err := getTokenString(expression)
+	if err != nil {
+		return 0, err
+	}
+	postfix, err := infixToPostfix(tokens)
+	if err != nil {
+		return 0, err
+	}
+	return evaluatePostfix(postfix)
 }
 
 func validateParentheses(expression string) error {
 	var stack []rune
-
 	for _, ch := range expression {
 		if ch == '(' {
 			stack = append(stack, ch)
@@ -30,11 +45,9 @@ func validateParentheses(expression string) error {
 			stack = stack[:len(stack)-1]
 		}
 	}
-
 	if len(stack) != 0 {
 		return errors.New("string is not valid")
 	}
-
 	return nil
 }
 
@@ -53,7 +66,6 @@ func getTokenString(line string) ([]string, error) {
 				tokens = append(tokens, number.String())
 				number.Reset()
 			}
-
 			if strings.ContainsRune("+-*/()", rune(elem)) {
 				tokens = append(tokens, string(elem))
 			} else {
@@ -159,31 +171,11 @@ func evaluatePostfix(postfix []string) (float64, error) {
 	return stack[0], nil
 }
 
-func Calc(expression string) (float64, error) {
-	if err := validateParentheses(expression); err != nil {
-		return 0, err
-	}
-	tokens, err := getTokenString(expression)
-	if err != nil {
-		return 0, err
-	}
-	postfix, err := infixToPostfix(tokens)
-	if err != nil {
-		return 0, err
-	}
-	result, err := evaluatePostfix(postfix)
-	if err != nil {
-		return 0, err
-	}
-	return result, nil
+func isNumeric(token string) bool {
+	_, err := strconv.ParseFloat(token, 64)
+	return err == nil
 }
 
-func main() {
-	expression := "3 + 4 * 2 / ( 1 - 5 )"
-	result, err := Calc(expression)
-	if err != nil {
-		fmt.Println("Error:", err)
-	} else {
-		fmt.Println("Result:", result)
-	}
+func isOperator(token string) bool {
+	return strings.Contains("+-*/", token)
 }
