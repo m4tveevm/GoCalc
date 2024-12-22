@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func calculateHandler(calc calculator.Calculator) http.HandlerFunc {
+func CalculateHandler(calc calculator.Calculator) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
@@ -47,7 +47,7 @@ func calculateHandler(calc calculator.Calculator) http.HandlerFunc {
 
 func main() {
 	calc := calculator.NewBasicCalculator()
-	http.HandleFunc("/api/v1/calculate", calculateHandler(calc))
+	http.HandleFunc("/api/v1/calculate", CalculateHandler(calc))
 	fmt.Println("Server is running on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
