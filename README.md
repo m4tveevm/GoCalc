@@ -4,15 +4,15 @@
 ---
 GoCalc (Calc is short for calculator)
 
-GoCalc is small http server that could process some requests
-in [Polish Notation](https://en.wikipedia.org/wiki/Polish_notation).
+GoCalc is small http server that could process some math requests that transforms and calculated via [Polish Notation](https://en.wikipedia.org/wiki/Polish_notation).
+
 It has two main modules:
 
 - The Calc module is designed to handle arithmetic expressions efficiently
   using the Shunting Yard Algorithm.
 - Server module: Provides an HTTP server for processing requests.
 
-_PS: There is also equivalent of such
+_PS: There is also equivalent of Shunting Yard Algorithm
 algorithm [available in Python](https://github.com/m4tveevm/etu_algo_labs)._
 
 ## 🚀 How to Get Started
