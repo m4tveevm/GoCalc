@@ -1,5 +1,10 @@
 # GoCalc
 
+> [!NOTE]
+> This is legacy part of calc service, there is new available version
+> in [master branch](https://github.com/m4tveevm/GoCalc)
+
+
 [![Tests Status](https://github.com/m4tveevm/GoCalc/actions/workflows/go.yml/badge.svg)](https://github.com/m4tveevm/GoCalc/actions)
 ---
 GoCalc (Calc is short for calculator)
