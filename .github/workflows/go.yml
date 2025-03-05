@@ -32,3 +32,4 @@ jobs:
     - name: Test
       working-directory: ./src
       run: go test -v ./...
+
