@@ -9,6 +9,7 @@
 
 It has three main modules:
 
+
 - **Orchestrator** – handles incoming requests, assigns IDs to expressions, and
   maintains task statuses.
 - **Agent** – periodically fetches tasks from the orchestrator, evaluates them
@@ -163,6 +164,9 @@ ok      github.com/m4tveevm/GoCalc/calc (cached)
 PASS
 ok      github.com/m4tveevm/GoCalc/orchestrator (cached)
 ```
+
+Each module's {name}_test.go file contains detailed tests for its
+functionality.
 
 > [!NOTE]
 > A legacy version without microservice architecture is available on
