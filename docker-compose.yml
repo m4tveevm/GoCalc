@@ -1,0 +1,22 @@
+services:
+  orchestrator:
+    build:
+      context: .
+      dockerfile: ./src/orchestrator/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - TIME_ADDITION_MS=1000
+      - TIME_SUBTRACTION_MS=1000
+      - TIME_MULTIPLICATIONS_MS=1000
+      - TIME_DIVISIONS_MS=1000
+
+  agent:
+    build:
+      context: .
+      dockerfile: ./src/agent/Dockerfile
+    environment:
+      - COMPUTING_POWER=2
+      - ORCHESTRATOR_URL=http://orchestrator:8080
+    depends_on:
+      - orchestrator
